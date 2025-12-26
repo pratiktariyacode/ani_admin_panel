@@ -12,10 +12,17 @@ const Login = () => {
         e.preventDefault();
         setError('');
         setLoading(true);
+
         try {
             await loginAdmin(email, password);
+            // ✅ If admin → login success
         } catch (err) {
-            setError('Invalid email or password');
+            // 🔐 ADMIN CHECK ERROR
+            if (err.message === 'NOT_ADMIN') {
+                setError('Access denied. Admin only.');
+            } else {
+                setError('Invalid email or password');
+            }
             console.error(err);
         } finally {
             setLoading(false);
@@ -30,8 +37,15 @@ const Login = () => {
                         <ShoppingBag size={32} className="text-white" />
                     </div>
                 </div>
+
                 <h2>Admin Login</h2>
-                {error && <div className="bg-red-50 text-danger p-3 rounded-lg mb-4 text-sm text-center border border-red-100">{error}</div>}
+
+                {error && (
+                    <div className="bg-red-50 text-danger p-3 rounded-lg mb-4 text-sm text-center border border-red-100">
+                        {error}
+                    </div>
+                )}
+
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label>Email Address</label>
@@ -43,6 +57,7 @@ const Login = () => {
                             required
                         />
                     </div>
+
                     <div className="form-group">
                         <label>Password</label>
                         <input
@@ -53,10 +68,16 @@ const Login = () => {
                             required
                         />
                     </div>
-                    <button type="submit" className="btn btn-primary w-full py-3" disabled={loading}>
+
+                    <button
+                        type="submit"
+                        className="btn btn-primary w-full py-3"
+                        disabled={loading}
+                    >
                         {loading ? 'Logging in...' : 'Sign In'}
                     </button>
                 </form>
+
                 <p className="text-center text-slate-500 text-sm mt-6">
                     Please contact system administrator for access.
                 </p>
