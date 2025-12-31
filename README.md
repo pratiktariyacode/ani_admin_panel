@@ -1,5 +1,9 @@
 https://ani-admin-panel.vercel.app/login
-
+React Native frontend ✅
+Node.js backend ✅
+MySQL DB ✅
+Cloudflare R2 ✅
+Ads ✅
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
